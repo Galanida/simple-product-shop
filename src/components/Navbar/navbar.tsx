@@ -39,7 +39,6 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "black",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 100, 1, 1),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -59,11 +58,11 @@ const Navbar = (): ReactElement => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [products, setProducts] = useState<productsType[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<productsType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true); // New loading state
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true); // Set loading to true while fetching
+      setLoading(true);
       try {
         const response = await axios.get("https://dummyjson.com/products");
         setProducts(response.data.products);
@@ -71,7 +70,7 @@ const Navbar = (): ReactElement => {
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false);
       }
     };
     fetchProducts();
@@ -102,9 +101,9 @@ const Navbar = (): ReactElement => {
             </Search>
           </StyledAppBar>
         </Stack>
-        {loading ? ( // Show loading indicator
+        {loading ? (
           <div>Searching...</div>
-        ) : filteredProducts.length === 0 ? ( // Check if no products are found
+        ) : filteredProducts.length === 0 ? (
           <div>
             No products found based on the search keyword: "{searchTerm}"
           </div>

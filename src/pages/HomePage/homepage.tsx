@@ -2,7 +2,6 @@ import { ReactElement, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
@@ -15,7 +14,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import { productsType } from "../../components/Navbar/types";
 
-const exchangeRate = 6; // Example exchange rate
+const exchangeRate = 6;
 
 const convertToPeso = (dollars: number): number => {
   return dollars * exchangeRate;
@@ -52,44 +51,40 @@ const HomePage = (props: ProductsProps): ReactElement => {
   };
   return (
     <Paper>
-      <TableContainer component={Paper}>
-        <Table sx={{ maxWidth: "auto" }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Thumbnail</TableCell>
-              <TableCell align="right">Name</TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right"></TableCell>
-              <TableCell align="right">Price</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {products
-              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => (
-                <TableRow
-                  key={row.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  onClick={() => handleRowClick(row)} // Handle row click
-                >
-                  <TableCell component="th" scope="row">
-                    <img
-                      src={row.thumbnail}
-                      alt={row.title}
-                      style={{ width: 50, height: 50 }}
-                    />
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {row.title}
-                  </TableCell>
-                  <TableCell align="left">
-                    P {convertToPeso(row.price ?? 1).toFixed(2)}
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Table sx={{ width: "70rem" }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Thumbnail</TableCell>
+            <TableCell align="left">Name</TableCell>
+            <TableCell align="left">Price</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {products
+            ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map((row) => (
+              <TableRow
+                key={row.id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                onClick={() => handleRowClick(row)}
+              >
+                <TableCell component="th" scope="row">
+                  <img
+                    src={row.thumbnail}
+                    alt={row.title}
+                    style={{ width: 100, height: 100 }}
+                  />
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {row.title}
+                </TableCell>
+                <TableCell align="left">
+                  P {convertToPeso(row.price ?? 1).toFixed(2)}
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
       <TablePagination
         rowsPerPageOptions={[5]}
         component="div"
@@ -99,7 +94,6 @@ const HomePage = (props: ProductsProps): ReactElement => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      {/* Modal Dialog */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{selectedProduct?.title}</DialogTitle>
         <DialogContent>
